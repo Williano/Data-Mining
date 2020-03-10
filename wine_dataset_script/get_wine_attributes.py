@@ -28,11 +28,9 @@ def get_wine_attributes(wine_dataset_file):
 
     # Drinkable
     # df.to_csv("drinkable_wine_attributes.csv", header=False, sep=" ")
-    # df.to_excel("drinkable_wine_attributes.xlsx", header=False)
 
     # Undrinkable
     df.to_csv("undrinkable_wine_attributes.csv", header=False, sep=" ")
-    df.to_excel("undrinkable_wine_attributes.xlsx", header=False)
 
 
 

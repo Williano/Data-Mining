@@ -100,6 +100,11 @@ def write_to_excel_and_csv(drinkable_list, undrinkable_list, no_data_list):
     undrinkable_data = pd.DataFrame.from_dict(undrinkable_list)
     no_data = pd.DataFrame.from_dict(no_data_list)
 
+    drinkable_data.columns = [column.strip().replace('_', ' ') for column in drinkable_data.columns]
+    undrinkable_data.columns = [column.strip().replace('_', ' ') for column in undrinkable_data.columns]
+    no_data.columns = [column.strip().replace('_', ' ') for column in no_data.columns]
+
+
     drinkable_data.to_excel('drinkable.xlsx', index=False)
     drinkable_data.to_csv("drinkable.csv", index=False)
     undrinkable_data.to_excel("undrinkable.xlsx", index=False)
@@ -113,7 +118,7 @@ def main():
     """
 
         # Declare a constant to store the excel file name.
-    CLEANED_WINE_DATASET_FILE = "cleaned_drink_duration_dataset.xlsx"
+    CLEANED_WINE_DATASET_FILE = "cleaned_drink_duration_dataset_binary_attributes.xlsx"
 
 
     # Loads and read file from excel

@@ -11,7 +11,8 @@ import numpy as np
 def get_wine_attributes(wine_dataset_file):
 
     #wine_details = wine_dataset_file.loc[:, "Wine"]
-    wine_attributes = wine_dataset_file.loc[:, "CITRUS":"MENTHOL"]
+    wine_attributes = wine_dataset_file.iloc[:, 10:495]
+
     wine_attribute_list = list()
 
     for wine_attribute in wine_attributes.itertuples(index=False, name="Wine"):
@@ -19,18 +20,18 @@ def get_wine_attributes(wine_dataset_file):
 
        #att1 = {"att" :[ key for key,value in attribute.items() if value == 1]}
 
-       non_zero_attirbutes = [ key for key,value in attribute.items() if value == 1]
-
+       non_zero_attirbutes = [ str(key).replace('_','') for key,value in attribute.items() if value == 1]
        wine_attribute_list.append(non_zero_attirbutes)
 
-    df = pd.DataFrame(wine_attribute_list)
-    df.index = np.arange(1,len(df)+1)
+    wine_attribute_list_dataframe = pd.DataFrame(wine_attribute_list)
+
+    #df.index = np.arange(1,len(df)+1)
 
     # Drinkable
-    # df.to_csv("drinkable_wine_attributes.csv", header=False, sep=" ")
+    # wine_attribute_list_dataframe.to_csv("drinkable_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
 
     # Undrinkable
-    df.to_csv("undrinkable_wine_attributes.csv", header=False, sep=" ")
+    wine_attribute_list_dataframe.to_csv("undrinkable_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
 
 
 

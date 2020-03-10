@@ -14,7 +14,9 @@ A python script to read an excel sheet containing a dataset of wines and extract
 Windows
 -------
    ```
-      python wine_dataset_script.py
+      python remove_zero_columns.py
+      python check_if_drinkable_or_not.py
+      python get_wine_attributes.py
 
    ```
 
@@ -22,5 +24,7 @@ Windows
  Mac
 --------
   ```
-      python3 wine_dataset_script.py
+      python3 remove_zero_columns.py
+      python3 check_if_drinkable_or_not.py
+      python3 get_wine_attributes.py
   ```

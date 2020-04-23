@@ -17,6 +17,7 @@ Windows
       python remove_zero_columns.py
       python check_if_drinkable_or_not.py
       python get_wine_attributes.py
+      python association_rule.py
 
    ```
 
@@ -27,4 +28,5 @@ Windows
       python3 remove_zero_columns.py
       python3 check_if_drinkable_or_not.py
       python3 get_wine_attributes.py
+      python3 association_rule.py
   ```

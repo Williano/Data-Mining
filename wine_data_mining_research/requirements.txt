@@ -1,4 +1,5 @@
 # Wine Dataset script dependencies
 pandas==1.0.1
-xlrd=1.2.0
-openpyxl=3.0.3
+xlrd==1.2.0
+openpyxl==3.0.3
+pyarc==1.0.25

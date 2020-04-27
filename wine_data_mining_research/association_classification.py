@@ -32,12 +32,12 @@
 from pyarc import CBA, TransactionDB
 import pandas as pd
 
-data_train = pd.read_csv("undrinkable_wine_attributes_numeric.csv")
-data_test = pd.read_csv("undrinkable_wine_attributes_numeric.csv")
+data_train = pd.read_csv("drink.csv")
+data_test = pd.read_csv("drink.csv")
 
-txns_train = TransactionDB.from_DataFrame(data_train)
-txns_test = TransactionDB.from_DataFrame(data_test)
-print(txns_test)
+txns_train = TransactionDB.from_DataFrame(data_train, drop_NaN=True)
+txns_test = TransactionDB.from_DataFrame(data_test, drop_NaN=True)
+#print(txns_test)
 
 
 cba = CBA(support=1.0, confidence=1.0, algorithm="m1")

@@ -8,7 +8,7 @@ A python script to read an excel sheet containing a dataset of wines and extract
 * openpyxl 3.0.3
 
 
-## Runing Program
+## Running Program
 1. Install pandas
 
 Windows

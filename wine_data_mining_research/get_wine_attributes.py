@@ -28,10 +28,10 @@ def get_wine_attributes(wine_dataset_file):
     #df.index = np.arange(1,len(df)+1)
 
     # Drinkable
-    # wine_attribute_list_dataframe.to_csv("drinkable_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
+    # wine_attribute_list_dataframe.to_csv("hold_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
 
     # Undrinkable
-    wine_attribute_list_dataframe.to_csv("undrinkable_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
+    wine_attribute_list_dataframe.to_csv("drink_wine_attributes_numeric.csv", header=False, sep=" ", index=False)
 
 
 
@@ -58,23 +58,23 @@ def main():
     """
 
     # Declare a constant to store the excel file name.
-    # DRINKABLE_WINE_DATASET_FILE = "drinkable.xlsx"
+    # HOLD_WINE_DATASET_FILE = "hold_data.xlsx"
 
     # # Loads and read file from excel
-    # drinkable_data_sheet = load_wine_dataset_sheet(DRINKABLE_WINE_DATASET_FILE)
+    # hold_data_sheet = load_wine_dataset_sheet(HOLD_WINE_DATASET_FILE)
 
-    # # Gets undrinkable Wine attributes
-    # get_wine_attributes(drinkable_data_sheet)
+    # # Gets hold Wine attributes
+    # get_wine_attributes(hold_data_sheet)
 
 
     #Declare a constant to store the excel file name.
-    UNDRINKABLE_WINE_DATASET_FILE = "undrinkable.xlsx"
+    DRINK_WINE_DATASET_FILE = "drink_data.xlsx"
 
     # Loads and read file from excel
-    undrinkable_data_sheet = load_wine_dataset_sheet(UNDRINKABLE_WINE_DATASET_FILE)
+    drink_data_sheet = load_wine_dataset_sheet(Drink_WINE_DATASET_FILE)
 
     # Gets drinkable Wine attributes
-    get_wine_attributes(undrinkable_data_sheet)
+    get_wine_attributes(drink_data_sheet)
 
 
 # Check if the file name is main, if the name is main run the script else do not run the script.

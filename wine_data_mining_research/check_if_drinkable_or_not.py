@@ -25,11 +25,7 @@ def load_wine_dataset_sheet(wine_data_set_file):
 def check_if_wine_is_drinkable_or_not(wine_data_sheet):
 
     """
-        Checks if a wine is drinkable or not.
-
-        Reads an excel sheet containing a dataset of wines and extract the ones which are
-        drinkable for 5 years or more into a new excel file, the ones below 5 years into
-        another excel file and the one with no data on when to drink them into another excel file.
+        Checks if a wine is drinkable or Held.
 
         Parameter:
         wine_data_set_file: The excel file containing the wine dataset.
@@ -38,8 +34,8 @@ def check_if_wine_is_drinkable_or_not(wine_data_sheet):
         None
     """
 
-    drinkable_wine_list = list()
-    undrinkable_wine_list = list()
+    hold_wine_list = list()
+    drink_wine_list = list()
     no_wine_data_list = list()
     wine_dict = dict()
 
@@ -60,7 +56,7 @@ def check_if_wine_is_drinkable_or_not(wine_data_sheet):
                     "Years To Decide To Drink or Not": years_to_decide_to_drink_or_not
                 }
                 wine_dict.update(wine_data)
-                drinkable_wine_list.append(wine_dict)
+               hold_wine_list.append(wine_dict)
 
 
             elif years_to_decide_to_drink_or_not < MINIMUM_YEAR:
@@ -68,7 +64,7 @@ def check_if_wine_is_drinkable_or_not(wine_data_sheet):
                     "Years To Decide To Drink or Not": years_to_decide_to_drink_or_not
                 }
                 wine_dict.update(wine_data)
-                undrinkable_wine_list.append(wine_dict)
+               drink_wine_list.append(wine_dict)
 
             else:
                 pass
@@ -81,34 +77,34 @@ def check_if_wine_is_drinkable_or_not(wine_data_sheet):
             no_wine_data_list.append(wine_dict)
 
     # Calls write to excel and csv function to write the data to excel and csv.
-    write_to_excel_and_csv(drinkable_wine_list, undrinkable_wine_list, no_wine_data_list)
+    write_to_excel_and_csv(hold_wine_list,drink_wine_list, no_wine_data_list)
 
-def write_to_excel_and_csv(drinkable_list, undrinkable_list, no_data_list):
+def write_to_excel_and_csv(hold_list, drink_list, no_data_list):
     """
-        Writes list of drinkable, undrinkable and no_wine data to a new excel file.
+        Writes list of hold, drink and no_wine data to a new excel file.
 
         Parameter:
-        drinkable_list: List containing a dictionary of wines that are drinkable.
-        undrinkable_list: List containing a dictionary of wines that are not drinkable.
+        hold_list: List containing a dictionary of wines that can be held.
+        drink_list: List containing a dictionary of wines that should be drunk.
         no_wine_data: List containing a dictionary of wines that should be drink now.
 
         Returns:
         None
     """
 
-    drinkable_data = pd.DataFrame.from_dict(drinkable_list)
-    undrinkable_data = pd.DataFrame.from_dict(undrinkable_list)
+    hold_data = pd.DataFrame.from_dict(hold_list)
+    drink_data = pd.DataFrame.from_dict(drink_list)
     no_data = pd.DataFrame.from_dict(no_data_list)
 
-    drinkable_data.columns = [column.strip().replace('_', ' ') for column in drinkable_data.columns]
-    undrinkable_data.columns = [column.strip().replace('_', ' ') for column in undrinkable_data.columns]
+    hold_data.columns = [column.strip().replace('_', ' ') for column in hold_data.columns]
+    drink_data.columns = [column.strip().replace('_', ' ') for column in drink_data.columns]
     no_data.columns = [column.strip().replace('_', ' ') for column in no_data.columns]
 
 
-    drinkable_data.to_excel('drinkable.xlsx', index=False)
-    drinkable_data.to_csv("drinkable.csv", index=False)
-    undrinkable_data.to_excel("undrinkable.xlsx", index=False)
-    undrinkable_data.to_csv("undrinkable.csv", index=False)
+    hold_data.to_excel('hold_data.xlsx', index=False)
+    hold_data.to_csv("hold.csv", index=False)
+    drink_data.to_excel("drink.xlsx", index=False)
+    drink_data.to_csv("drink.csv", index=False)
     no_data.to_excel("no_data.xlsx", index=False)
     no_data.to_csv("no_data.csv", index=False)
 

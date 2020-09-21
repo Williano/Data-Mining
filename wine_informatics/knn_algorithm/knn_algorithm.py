@@ -78,7 +78,8 @@ def knn_algorithm_with_k_fold_validation(wine_dataset):
 
 
     print(cross_validation_scores)
-    print("cross validation scores mean:{}".format(np.mean(cross_validation_scores)))
+    print()
+    print("Cross validation scores mean:{}".format(np.mean(cross_validation_scores) * 100))
 
 
 def main():

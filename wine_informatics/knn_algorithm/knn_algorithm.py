@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.utils import shuffle
@@ -22,17 +21,17 @@ def analyse_dataset(processed_data):
 
 def knn_algorithm_with_holdout_validation(wine_dataset):
 
-    # shuffled_data = shuffle(wine_dataset)
-    # shuffled_data.reset_index(inplace=True, drop=True)
+    shuffled_data = shuffle(wine_dataset)
+    shuffled_data.reset_index(inplace=True, drop=True)
 
-    label = wine_dataset["Class"].values
-    dataset = wine_dataset.iloc[:, : 486].values
+    label = shuffled_data["Class"].values
+    dataset = shuffled_data.iloc[:, : 486].values
 
 
     X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20, random_state=1, stratify=label)
 
 
-    classifier = KNeighborsClassifier(n_neighbors=37)
+    classifier = KNeighborsClassifier(n_neighbors=30)
     classifier.fit(X_train, y_train)
 
     y_pred = classifier.predict(X_test)
@@ -79,8 +78,39 @@ def knn_algorithm_with_k_fold_validation(wine_dataset):
 
     print(cross_validation_scores)
     print()
-    print("Cross validation scores mean:{}".format(np.mean(cross_validation_scores) * 100))
+    print("Cross validation scores mean: {}%".format(np.mean(cross_validation_scores) * 100))
 
+
+def knn_algorithm_with_hypertuning(wine_dataset):
+
+    shuffled_data = shuffle(wine_dataset)
+    shuffled_data.reset_index(inplace=True, drop=True)
+
+    # Extract features and label
+    label = shuffled_data["Class"].values
+    dataset = shuffled_data.iloc[:, : 486].values
+
+    # Create classifier
+    knn_classifier = KNeighborsClassifier()
+
+    #create a dictionary of all values we want to test for n_neighbors
+    param_grid = {"n_neighbors": np.arange(1, 60)}
+
+    #use gridsearch to test all values for n_neighbors
+    knn_gscv = GridSearchCV(knn_classifier, param_grid, cv=10)
+
+    #fit model to data
+    knn_gscv.fit(dataset, label)
+
+    #check top performing n_neighbors value
+    best_parameters = knn_gscv.best_params_
+
+    #check mean score for the top performing value of n_neighbors
+    best_score = knn_gscv.best_score_
+
+    print(best_parameters)
+    print()
+    print(best_score)
 
 def main():
 
@@ -92,7 +122,9 @@ def main():
 
     #knn_algorithm_with_holdout_validation(processed_data_file)
 
-    knn_algorithm_with_k_fold_validation(processed_data_file)
+    #knn_algorithm_with_k_fold_validation(processed_data_file)
+
+    knn_algorithm_with_hypertuning(processed_data_file)
 
 
 

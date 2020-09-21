@@ -21,11 +21,11 @@ def analyse_dataset(processed_data):
 
 def knn_algorithm(wine_dataset):
 
-    shuffled_data = shuffle(wine_dataset)
-    shuffled_data.reset_index(inplace=True, drop=True)
+    # shuffled_data = shuffle(wine_dataset)
+    # shuffled_data.reset_index(inplace=True, drop=True)
 
-    label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    label = wine_dataset["Class"].values
+    dataset = wine_dataset.iloc[:, : 486].values
 
 
     X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20)
@@ -42,19 +42,19 @@ def knn_algorithm(wine_dataset):
     error = []
 
     # Calculating error for K values between 1 and 40
-    for i in range(1, 100):
+    for i in range(1, 50):
         knn = KNeighborsClassifier(n_neighbors=i)
         knn.fit(X_train, y_train)
         pred_i = knn.predict(X_test)
         error.append(np.mean(pred_i != y_test))
 
     plt.figure(figsize=(12, 6))
-    plt.plot(range(1, 100), error, color='red', linestyle='dashed', marker='o',
+    plt.plot(range(1, 50), error, color='red', linestyle='dashed', marker='o',
             markerfacecolor='blue', markersize=10)
     plt.title('Error Rate K Value')
     plt.xlabel('K Value')
     plt.ylabel('Mean Error')
-    plt.show()
+    #plt.show()
 
 
 def main():

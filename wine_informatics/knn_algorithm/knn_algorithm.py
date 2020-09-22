@@ -21,11 +21,10 @@ def analyse_dataset(processed_data):
 
 def knn_algorithm_with_holdout_validation(wine_dataset):
 
-    shuffled_data = shuffle(wine_dataset)
-    shuffled_data.reset_index(inplace=True, drop=True)
+    shuffled_data = wine_dataset.sample(frac=1).reset_index(drop=True)
 
-    label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    label = wine_dataset["Class"].values
+    dataset = wine_dataset.iloc[:, : 486].values
 
 
     X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20, random_state=1, stratify=label)
@@ -62,15 +61,14 @@ def knn_algorithm_with_holdout_validation(wine_dataset):
 
 def knn_algorithm_with_k_fold_validation(wine_dataset):
 
-    shuffled_data = shuffle(wine_dataset)
-    shuffled_data.reset_index(inplace=True, drop=True)
+    #shuffled_data = wine_dataset.sample(frac=1).reset_index(drop=True)
 
     # Extract features and label
-    label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    label = wine_dataset["Class"].values
+    dataset = wine_dataset.iloc[:, : 486].values
 
     # Create classifier
-    knn_classifier = KNeighborsClassifier(n_neighbors=30)
+    knn_classifier = KNeighborsClassifier(n_neighbors=55)
 
     # Train model with 10 fold cross validation
     cross_validation_scores = cross_val_score(knn_classifier, dataset, label, cv=10)
@@ -83,12 +81,11 @@ def knn_algorithm_with_k_fold_validation(wine_dataset):
 
 def knn_algorithm_with_hypertuning(wine_dataset):
 
-    shuffled_data = shuffle(wine_dataset)
-    shuffled_data.reset_index(inplace=True, drop=True)
+    #shuffled_data = wine_dataset.sample(frac=1).reset_index(drop=True)
 
     # Extract features and label
-    label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    label = wine_dataset["Class"].values
+    dataset = wine_dataset.iloc[:, : 486].values
 
     # Create classifier
     knn_classifier = KNeighborsClassifier()
@@ -122,9 +119,9 @@ def main():
 
     #knn_algorithm_with_holdout_validation(processed_data_file)
 
-    #knn_algorithm_with_k_fold_validation(processed_data_file)
+    knn_algorithm_with_k_fold_validation(processed_data_file)
 
-    knn_algorithm_with_hypertuning(processed_data_file)
+    #knn_algorithm_with_hypertuning(processed_data_file)
 
 
 

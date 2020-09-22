@@ -34,7 +34,7 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
     naive_bayes_classifier = GaussianNB()
     naive_bayes_classifier.fit(X_train, y_train)
 
-    y_pred = classifier.predict(X_test)
+    y_pred = naive_bayes_classifier.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred) * 100
     print(accuracy)
@@ -45,12 +45,12 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
 
 def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
 
-    shuffled_data = shuffle(wine_dataset)
-    shuffled_data.reset_index(inplace=True, drop=True)
+    #shuffled_data = shuffle(wine_dataset)
+    #shuffled_data.reset_index(inplace=True, drop=True)
 
     # Extract features and label
-    label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    label = wine_dataset["Class"].values
+    dataset = wine_dataset.iloc[:, : 486].values
 
     # Create classifier
     naive_bayes_classifier = GaussianNB()

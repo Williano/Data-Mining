@@ -30,7 +30,7 @@ def knn_algorithm_with_holdout_validation(wine_dataset):
     X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20, random_state=1, stratify=label)
 
 
-    classifier = KNeighborsClassifier(n_neighbors=30)
+    classifier = KNeighborsClassifier(n_neighbors=38, algorithm='auto', metric="jaccard")
     classifier.fit(X_train, y_train)
 
     y_pred = classifier.predict(X_test)
@@ -41,22 +41,22 @@ def knn_algorithm_with_holdout_validation(wine_dataset):
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
-    # error = []
+    error = []
 
-    # # Calculating error for K values between 1 and 40
-    # for i in range(1, 60):
-    #     knn = KNeighborsClassifier(n_neighbors=i)
-    #     knn.fit(X_train, y_train)
-    #     pred_i = knn.predict(X_test)
-    #     error.append(np.mean(pred_i != y_test))
+    # Calculating error for K values between 1 and 40
+    for i in range(1, 100):
+        knn = KNeighborsClassifier(n_neighbors=i)
+        knn.fit(X_train, y_train)
+        pred_i = knn.predict(X_test)
+        error.append(np.mean(pred_i != y_test))
 
-    # plt.figure(figsize=(12, 6))
-    # plt.plot(range(1, 60), error, color='red', linestyle='dashed', marker='o',
-    #         markerfacecolor='blue', markersize=10)
-    # plt.title('Error Rate K Value')
-    # plt.xlabel('K Value')
-    # plt.ylabel('Mean Error')
-    # plt.show()
+    plt.figure(figsize=(12, 6))
+    plt.plot(range(1, 100), error, color='red', linestyle='dashed', marker='o',
+            markerfacecolor='blue', markersize=10)
+    plt.title('Error Rate K Value')
+    plt.xlabel('K Value')
+    plt.ylabel('Mean Error')
+    plt.show()
 
 
 def knn_algorithm_with_k_fold_validation(wine_dataset):
@@ -68,7 +68,7 @@ def knn_algorithm_with_k_fold_validation(wine_dataset):
     dataset = wine_dataset.iloc[:, : 486].values
 
     # Create classifier
-    knn_classifier = KNeighborsClassifier(n_neighbors=55)
+    knn_classifier = KNeighborsClassifier(n_neighbors=100,  algorithm='auto', metric="jaccard")
 
     # Train model with 10 fold cross validation
     cross_validation_scores = cross_val_score(knn_classifier, dataset, label, cv=10)
@@ -88,10 +88,10 @@ def knn_algorithm_with_hypertuning(wine_dataset):
     dataset = wine_dataset.iloc[:, : 486].values
 
     # Create classifier
-    knn_classifier = KNeighborsClassifier()
+    knn_classifier = KNeighborsClassifier(metric="jaccard")
 
     #create a dictionary of all values we want to test for n_neighbors
-    param_grid = {"n_neighbors": np.arange(1, 60)}
+    param_grid = {"n_neighbors": np.arange(1, 100)}
 
     #use gridsearch to test all values for n_neighbors
     knn_gscv = GridSearchCV(knn_classifier, param_grid, cv=10)
@@ -103,7 +103,7 @@ def knn_algorithm_with_hypertuning(wine_dataset):
     best_parameters = knn_gscv.best_params_
 
     #check mean score for the top performing value of n_neighbors
-    best_score = knn_gscv.best_score_
+    best_score = knn_gscv.best_score_ * 100
 
     print(best_parameters)
     print()
@@ -117,9 +117,9 @@ def main():
 
     #analyse_dataset(processed_data_file)
 
-    #knn_algorithm_with_holdout_validation(processed_data_file)
+    knn_algorithm_with_holdout_validation(processed_data_file)
 
-    knn_algorithm_with_k_fold_validation(processed_data_file)
+    #knn_algorithm_with_k_fold_validation(processed_data_file)
 
     #knn_algorithm_with_hypertuning(processed_data_file)
 

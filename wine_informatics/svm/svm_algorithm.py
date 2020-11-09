@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score,\
+                                    ShuffleSplit
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix,\
                             accuracy_score
@@ -23,11 +24,13 @@ def analyse_dataset(processed_data):
 
 def svm_algorithm_with_holdout_validation(wine_dataset):
 
-    # shuffled_data = shuffle(wine_dataset)
-    # shuffled_data.reset_index(inplace=True, drop=True)
+    shuffled_data = wine_dataset.sample(frac=1,
+                                        random_state=42).reset_index(drop=True)
 
-    label = wine_dataset["Class"].values
-    dataset = wine_dataset.iloc[:, : 486].values
+    label = shuffled_data["Class"].values
+    # dataset = shuffled_data.iloc[:, : 486].values
+    # dataset = shuffled_data.iloc[:, : 485].values
+    dataset = shuffled_data.iloc[:, : 482].values
 
     X_train, X_test, y_train, y_test = train_test_split(dataset, label,
                                                         test_size=0.20,
@@ -47,14 +50,15 @@ def svm_algorithm_with_holdout_validation(wine_dataset):
 
 def svm_algorithm_with_k_fold_validation(wine_dataset):
 
-    # shuffled_data = shuffle(wine_dataset)
-    # shuffled_data.reset_index(inplace=True, drop=True)
+    shuffled_data = wine_dataset.sample(frac=1,
+                                        random_state=42).reset_index(
+                                           drop=True)
 
     # Extract features and label
-    label = wine_dataset["Class"].values
-    # dataset = wine_dataset.iloc[:, : 486].values
-    # dataset = wine_dataset.iloc[:, : 485].values
-    dataset = wine_dataset.iloc[:, : 482].values
+    label = shuffled_data["Class"].values
+    dataset = shuffled_data.iloc[:, : 486].values
+    # dataset = shuffled_data.iloc[:, : 485].values
+    # dataset = shuffled_data.iloc[:, : 482].values
 
     # Create classifier
     svc_classifier = SVC(kernel="linear")
@@ -73,18 +77,21 @@ def main():
 
     wine_dataset_file = "drink_and_hold_dataset.csv"
 
-    # tweaked_wine_dataset_file = "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
+    # tweaked_wine_dataset_file = \
+    # "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
 
     tweaked_wine_dataset_file =\
         "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
 
-    processed_data_file = load_dataset(tweaked_wine_dataset_file)
+    # processed_data_file = load_dataset(tweaked_wine_dataset_file)
+
+    processed_data_file = load_dataset(wine_dataset_file)
 
     # analyse_dataset(processed_data_file)
 
-    # svm_algorithm_with_holdout_validation(processed_data_file)
+    svm_algorithm_with_holdout_validation(processed_data_file)
 
-    svm_algorithm_with_k_fold_validation(processed_data_file)
+    # svm_algorithm_with_k_fold_validation(processed_data_file)
 
 
 if __name__ == "__main__":

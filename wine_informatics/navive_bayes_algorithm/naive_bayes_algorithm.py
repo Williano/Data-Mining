@@ -12,6 +12,7 @@ def load_dataset(wine_dataset_csv):
 
     return wine_dataframe
 
+
 def analyse_dataset(processed_data):
 
     data = processed_data
@@ -21,15 +22,16 @@ def analyse_dataset(processed_data):
 
 def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
 
-    # shuffled_data = shuffle(wine_dataset)
-    # shuffled_data.reset_index(inplace=True, drop=True)
+    shuffled_data = wine_dataset.sample(frac=1,
+                                        random_state=42).reset_index(
+                                           drop=True)
 
-    label = wine_dataset["Class"].values
-    dataset = wine_dataset.iloc[:, : 486].values
+    label = shuffled_data["Class"].values
+    dataset = shuffled_data.iloc[:, : 486].values
 
-
-    X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20, random_state=1)
-
+    X_train, X_test, y_train, y_test = train_test_split(dataset, label,
+                                                        test_size=0.20,
+                                                        random_state=1)
 
     naive_bayes_classifier = GaussianNB()
     naive_bayes_classifier.fit(X_train, y_train)
@@ -45,42 +47,48 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
 
 def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
 
-    #shuffled_data = shuffle(wine_dataset)
-    #shuffled_data.reset_index(inplace=True, drop=True)
-
+    shuffled_data = wine_dataset.sample(frac=1,
+                                        random_state=42).reset_index(
+                                           drop=True)
     # Extract features and label
-    label = wine_dataset["Class"].values
-    #dataset = wine_dataset.iloc[:, : 486].values
-    #dataset = wine_dataset.iloc[:, : 485].values
-    dataset = wine_dataset.iloc[:, : 482].values
+    label = shuffled_data["Class"].values
+    dataset = shuffled_data.iloc[:, : 486].values
+    # dataset = shuffled_data.iloc[:, : 485].values
+    # dataset = shuffled_data.iloc[:, : 482].values
 
     # Create classifier
     naive_bayes_classifier = GaussianNB()
 
     # Train model with 10 fold cross validation
-    cross_validation_scores = cross_val_score(naive_bayes_classifier, dataset, label, cv=10)
-
+    cross_validation_scores = cross_val_score(naive_bayes_classifier,
+                                              dataset, label, cv=10)
 
     print(cross_validation_scores)
     print()
-    print("Cross validation scores mean: {}%".format(np.mean(cross_validation_scores) * 100))
+    print("Cross validation scores mean: {}%".format(np.mean(
+                                                    cross_validation_scores
+                                                    ) * 100))
+
 
 def main():
 
     wine_dataset_file = "drink_and_hold_dataset.csv"
 
-    #tweaked_wine_dataset_file = "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
+    # tweaked_wine_dataset_file = \
+    #     "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
 
-    tweaked_wine_dataset_file = "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
-
+    tweaked_wine_dataset_file = \
+        "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
 
     processed_data_file = load_dataset(tweaked_wine_dataset_file)
 
-    #analyse_dataset(processed_data_file)
+    processed_data_file = load_dataset(wine_dataset_file)
 
-    #naive_bayes_algorithm_with_holdout_validation(processed_data_file)
+    # analyse_dataset(processed_data_file)
 
-    naive_bayes_algorithm_with_k_fold_validation(processed_data_file)
+    naive_bayes_algorithm_with_holdout_validation(processed_data_file)
+
+    # naive_bayes_algorithm_with_k_fold_validation(processed_data_file)
 
 
 if __name__ == "__main__":

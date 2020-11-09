@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix,\
                             accuracy_score
 from sklearn.utils import shuffle
@@ -21,7 +21,7 @@ def analyse_dataset(processed_data):
     print(data.head())
 
 
-def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
+def svm_algorithm_with_holdout_validation(wine_dataset):
 
     # shuffled_data = shuffle(wine_dataset)
     # shuffled_data.reset_index(inplace=True, drop=True)
@@ -33,10 +33,10 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
                                                         test_size=0.20,
                                                         random_state=1)
 
-    naive_bayes_classifier = GaussianNB()
-    naive_bayes_classifier.fit(X_train, y_train)
+    svc_classifier = SVC(kernel="linear")
+    svc_classifier.fit(X_train, y_train)
 
-    y_pred = naive_bayes_classifier.predict(X_test)
+    y_pred = svc_classifier.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred) * 100
     print(accuracy)
@@ -45,7 +45,7 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
     print(classification_report(y_test, y_pred))
 
 
-def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
+def svm_algorithm_with_k_fold_validation(wine_dataset):
 
     # shuffled_data = shuffle(wine_dataset)
     # shuffled_data.reset_index(inplace=True, drop=True)
@@ -57,10 +57,10 @@ def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
     dataset = wine_dataset.iloc[:, : 482].values
 
     # Create classifier
-    naive_bayes_classifier = GaussianNB()
+    svc_classifier = SVC(kernel="linear")
 
     # Train model with 10 fold cross validation
-    cross_validation_scores = cross_val_score(naive_bayes_classifier, dataset,
+    cross_validation_scores = cross_val_score(svc_classifier, dataset,
                                               label, cv=10)
 
     print(cross_validation_scores)
@@ -82,9 +82,9 @@ def main():
 
     # analyse_dataset(processed_data_file)
 
-    # naive_bayes_algorithm_with_holdout_validation(processed_data_file)
+    # svm_algorithm_with_holdout_validation(processed_data_file)
 
-    naive_bayes_algorithm_with_k_fold_validation(processed_data_file)
+    svm_algorithm_with_k_fold_validation(processed_data_file)
 
 
 if __name__ == "__main__":

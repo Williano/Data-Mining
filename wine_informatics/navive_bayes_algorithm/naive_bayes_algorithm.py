@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import classification_report, confusion_matrix,
+from sklearn.metrics import classification_report, confusion_matrix,\
                             accuracy_score
 from sklearn.utils import shuffle
 

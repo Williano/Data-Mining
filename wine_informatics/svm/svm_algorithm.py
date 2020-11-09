@@ -3,7 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix,\
+                            accuracy_score
 from sklearn.utils import shuffle
 
 
@@ -28,7 +29,9 @@ def naive_bayes_algorithm_with_holdout_validation(wine_dataset):
     label = wine_dataset["Class"].values
     dataset = wine_dataset.iloc[:, : 486].values
 
-    X_train, X_test, y_train, y_test = train_test_split(dataset, label, test_size=0.20, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(dataset, label,
+                                                        test_size=0.20,
+                                                        random_state=1)
 
     naive_bayes_classifier = GaussianNB()
     naive_bayes_classifier.fit(X_train, y_train)
@@ -58,7 +61,7 @@ def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
 
     # Train model with 10 fold cross validation
     cross_validation_scores = cross_val_score(naive_bayes_classifier, dataset,
-                                             label, cv=10)
+                                              label, cv=10)
 
     print(cross_validation_scores)
     print()
@@ -73,7 +76,7 @@ def main():
     # tweaked_wine_dataset_file = "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
 
     tweaked_wine_dataset_file =\
-    "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
+        "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
 
     processed_data_file = load_dataset(tweaked_wine_dataset_file)
 

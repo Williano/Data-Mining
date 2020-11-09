@@ -158,7 +158,7 @@ def main():
     k_values = [20, 30, 35, 40, 45, 50, 55, 60, 65, 70, 77, 85, 95, 100]
 
     for k in k_values:
-        knn_algorithm_with_holdout_validation(processed_data_file, k)
+        knn_algorithm_with_k_fold_validation(processed_data_file, k)
 
 
 if __name__ == "__main__":

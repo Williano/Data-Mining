@@ -53,9 +53,9 @@ def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
                                            drop=True)
     # Extract features and label
     label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    # dataset = shuffled_data.iloc[:, : 486].values
     # dataset = shuffled_data.iloc[:, : 485].values
-    # dataset = shuffled_data.iloc[:, : 482].values
+    dataset = shuffled_data.iloc[:, : 482].values
 
     # Create classifier
     naive_bayes_classifier = GaussianNB()
@@ -73,7 +73,7 @@ def naive_bayes_algorithm_with_k_fold_validation(wine_dataset):
 
 def main():
 
-    wine_dataset_file = "drink_and_hold_dataset.csv"
+    # wine_dataset_file = "drink_and_hold_dataset.csv"
 
     # tweaked_wine_dataset_file = \
     #     "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
@@ -83,13 +83,13 @@ def main():
 
     processed_data_file = load_dataset(tweaked_wine_dataset_file)
 
-    processed_data_file = load_dataset(wine_dataset_file)
+    # processed_data_file = load_dataset(wine_dataset_file)
 
     # analyse_dataset(processed_data_file)
 
-    naive_bayes_algorithm_with_holdout_validation(processed_data_file)
+    # naive_bayes_algorithm_with_holdout_validation(processed_data_file)
 
-    # naive_bayes_algorithm_with_k_fold_validation(processed_data_file)
+    naive_bayes_algorithm_with_k_fold_validation(processed_data_file)
 
 
 if __name__ == "__main__":

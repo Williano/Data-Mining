@@ -77,9 +77,9 @@ def knn_algorithm_with_k_fold_validation(wine_dataset, k_value):
 
     # Extract features and label
     label = shuffled_data["Class"].values
-    dataset = shuffled_data.iloc[:, : 486].values
+    # dataset = shuffled_data.iloc[:, : 486].values
     # dataset = shuffled_data.iloc[:, : 485].values
-    # dataset = shuffled_data.iloc[:, : 482].values
+    dataset = shuffled_data.iloc[:, : 482].values
 
     # Create classifier
     knn_classifier = KNeighborsClassifier(n_neighbors=k_value,
@@ -135,17 +135,17 @@ def knn_algorithm_with_hypertuning(wine_dataset):
 
 def main():
 
-    wine_dataset_file = "drink_and_hold_dataset.csv"
+    # wine_dataset_file = "drink_and_hold_dataset.csv"
 
     # tweaked_wine_dataset_file = \
     #     "drink_and_hold_dataset_with_finish_attribute_deleted.csv"
 
-    # tweaked_wine_dataset_file = \
-    #     "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
+    tweaked_wine_dataset_file = \
+        "drink_and_hold_dataset_with_4_attributes_above_35_percent_deleted.csv"
 
-    # processed_data_file = load_dataset(tweaked_wine_dataset_file)
+    processed_data_file = load_dataset(tweaked_wine_dataset_file)
 
-    processed_data_file = load_dataset(wine_dataset_file)
+    # processed_data_file = load_dataset(wine_dataset_file)
 
     # analyse_dataset(processed_data_file)
 
